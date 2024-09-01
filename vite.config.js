@@ -6,7 +6,7 @@ import viteImagemin from 'vite-plugin-imagemin';
 import purgecss from 'vite-plugin-purgecss';
 
 export default defineConfig({
-  base: '/txts/',
+  base: '/txtshare/',
   plugins: [
     react(),
     // viteCompression({algorithm: "brotliCompress", compressionOptions: {level: 11}}), 
