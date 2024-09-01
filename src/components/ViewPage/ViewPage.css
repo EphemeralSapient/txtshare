@@ -1,0 +1,297 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.file-code {
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.247);
+    color: #fff;
+}
+
+.file-code .cm-editor {
+    border: none !important;
+    background: none !important;
+}
+
+.file-code .cm-content {
+    color: #e0e0e0;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.file-code .cm-gutters {
+    background: none !important;
+    border-right: none !important;
+}
+
+.file-info-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+    background: rgba(24, 26, 27, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1.5rem;
+}
+
+.file-info-item {
+    display: flex;
+    align-items: center;
+}
+
+.account-icon, .date-icon {
+    margin-right: 0.5rem;
+    color: #a0a0a0;
+}
+
+.date-info span {
+    position: relative;
+    cursor: pointer;
+    margin-right: 1rem;
+    text-decoration: underline dotted ;
+    text-decoration-thickness: 0.08rem;
+}
+
+.date-info span[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: -1.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.tag-icon, .syntax-icon {
+    margin-right: 0.3rem;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+}
+.file-info-item.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* Adjust gap between items */
+}
+
+.category-tag {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.3rem 1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color:#ffffff9b;
+    margin: 0.2rem 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    white-space: nowrap;
+    transition: box-shadow 0.3s ease-in-out;
+    max-width: calc(100% / 4 - 1rem); /* Adjust number to fit desired items per row */
+}
+
+.category-tag:hover {
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.8);
+}
+
+
+.syntax-highlight {
+    display: flex;
+    align-items: center;
+}
+
+.syntax-highlight strong {
+    margin-right: 0.5rem;
+}
+
+.syntax-highlight .syntax-icon {
+    margin-right: 0.6rem;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 600px) {
+    .file-info-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+
+    .category-tag {
+        max-width: 100%;
+        margin: 0.2rem 0;
+    }
+
+}
+
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0); }
+    15% { transform: rotate(-5deg); }
+    30% { transform: rotate(3deg); }
+    45% { transform: rotate(-3deg); }
+    60% { transform: rotate(1deg); }
+    75% { transform: rotate(-1deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.view-raw-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.view-raw-container {
+    transition: filter 0.5s ease-in-out;
+}
+
+.view-raw-container.blurred {
+    filter: blur(10px);
+}
+
+.view-raw-container.unlocking {
+    filter: blur(0);
+}
+
+.password-overlay, .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.214);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.password-form {
+    background-color: rgba(0, 0, 0, 0.232);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.57);
+    text-align: center;
+    color: #fff;
+    max-width: 90%;
+    width: 300px;
+    transition: all 0.5s ease;
+}
+
+.password-form.incorrect {
+    animation: shake 0.5s ease-in-out;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.password-form.correct {
+    animation: pulse 0.5s ease-in-out;
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.password-form h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.password-form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.password-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.password-form button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.password-form button:hover {
+    background-color: #45a049;
+}
+
+.lock-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}
+
+.spinner-icon {
+    font-size: 3rem;
+    color: #fff;
+    animation: spin 1s linear infinite;
+}
+
+.view-raw-container.blurred > *:not(.password-overlay) {
+    pointer-events: none;
+    user-select: none;
+}
+
+.file-not-found {
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: center;
+    align-items: center;
+    color: #ffffffaf; /* Darker text for better contrast */
+    text-align: center;
+    padding: 2rem;
+  
+    /* Center on screen */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: #0000007a; 
+}
+  
+  .error-title {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+  }
+  
+  .error-description {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    color: #666; /* Lighter text for description */
+  }
+  
+  .file-not-found svg {
+    color: #f00; /* Red icon */
+    margin-bottom: 1rem;
+  }
