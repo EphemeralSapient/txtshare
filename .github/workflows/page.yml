@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build the Svelte app
+    - name: Build via vite
       run: npm run build
 
     - name: Deploy to GitHub Pages
