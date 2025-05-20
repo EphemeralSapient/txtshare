@@ -1,5 +1,20 @@
-body {
-    font-family: 'Roboto', sans-serif;
+/* body font-family is inherited from index.css or direct body style */
+
+.view-raw-container {
+    padding: 10px; /* Basic padding */
+    overflow-wrap: break-word; /* Standard property for word wrapping */
+}
+
+@media (max-width: 768px) { /* Adjusted breakpoint for general padding */
+    .view-raw-container {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) { /* More specific for mobile */
+    .view-raw-container {
+        padding: 5px; 
+    }
 }
 
 .file-code {
@@ -19,7 +34,7 @@ body {
 
 .file-code .cm-content {
     color: #e0e0e0;
-    font-family: 'Source Code Pro', monospace;
+    font-family: var(--app-font-family) !important; /* Use selected font */
 }
 
 .file-code .cm-gutters {
@@ -37,13 +52,47 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     color: #fff;
-    font-family: 'Poppins', sans-serif;
+    /* font-family will be inherited */
     margin-bottom: 1.5rem;
+}
+
+.file-info-container .file-name h3 { /* Targeting file name specifically */
+    margin: 0; 
+    font-size: 1.3rem; /* Default size for file name */
+    overflow-wrap: break-word; /* Allow file name to wrap */
+    word-break: break-word; /* More aggressive wrapping if needed */
 }
 
 .file-info-item {
     display: flex;
     align-items: center;
+    overflow-wrap: break-word; /* Allow text in items to wrap */
+}
+
+@media (max-width: 768px) { /* Tablet and below */
+    .file-info-container .file-name h3 {
+        font-size: 1.2rem; 
+    }
+    .file-info-item {
+        font-size: 0.95rem; /* General font size for info items */
+    }
+}
+
+@media (max-width: 600px) {
+    .file-info-container {
+        padding: 0.8rem 1rem; /* Adjust padding for stacked view */
+    }
+    .file-info-container .file-name h3 {
+        font-size: 1.1rem; /* Slightly smaller on mobile */
+    }
+    .file-info-item {
+        font-size: 0.9rem; /* Adjust font for other items in the container */
+        padding: 8px 0; /* Add some vertical padding when stacked, increased slightly */
+        min-width: 100%; /* Ensure items take full width when stacked */
+    }
+    .file-info-item.categories {
+        padding: 0; /* Remove padding for categories item as tags have their own */
+    }
 }
 
 .account-icon, .date-icon {
@@ -98,10 +147,12 @@ body {
     white-space: nowrap;
     transition: box-shadow 0.3s ease-in-out;
     max-width: calc(100% / 4 - 1rem); /* Adjust number to fit desired items per row */
+    /* Allow tags to wrap text if very long, instead of causing overflow */
+    white-space: normal; 
 }
 
 .category-tag:hover {
-    box-shadow: 0 0 15px rgba(102, 252, 241, 0.8);
+    box-shadow: 0 0 15px var(--app-theme-color);
 }
 
 
@@ -128,10 +179,11 @@ body {
 
 
     .category-tag {
-        max-width: 100%;
-        margin: 0.2rem 0;
+        max-width: 100%; /* Takes full width when stacked */
+        margin: 0.3rem 0; /* Adjusted margin for better spacing when stacked */
+        font-size: 0.8rem; /* Slightly adjust font size for mobile */
+        padding: 0.4rem 0.8rem; /* Adjust padding */
     }
-
 }
 
 
@@ -196,8 +248,24 @@ body {
     text-align: center;
     color: #fff;
     max-width: 90%;
-    width: 300px;
+    width: 300px; /* Will be constrained by max-width on small screens */
     transition: all 0.5s ease;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+@media (max-width: 360px) { /* For very small screens */
+    .password-form {
+        padding: 1.5rem; /* Reduce padding */
+        font-size: 0.9rem; /* Adjust font size of text inside form */
+    }
+    .password-form h2 {
+        font-size: 1.3rem; /* Adjust title size */
+    }
+    .password-form input,
+    .password-form button {
+        padding: 0.6rem; /* Adjust padding for inputs/buttons */
+        font-size: 0.9rem;
+    }
 }
 
 .password-form.incorrect {
@@ -288,10 +356,22 @@ body {
   .error-description {
     font-size: 1.2rem;
     margin-top: 0.5rem;
-    color: #666; /* Lighter text for description */
+    color: #d1d1d1; /* Adjusted for dark theme */
   }
   
   .file-not-found svg {
     color: #f00; /* Red icon */
     margin-bottom: 1rem;
   }
+
+@media (max-width: 600px) {
+    .file-not-found {
+        padding: 1rem;
+    }
+    .error-title {
+        font-size: 2rem; /* Reduce font size for title */
+    }
+    .error-description {
+        font-size: 1rem; /* Reduce font size for description */
+    }
+}

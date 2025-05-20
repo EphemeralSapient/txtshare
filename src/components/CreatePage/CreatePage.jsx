@@ -2,6 +2,8 @@
 import { useState, useEffect, Suspense } from 'react';
 import Cookies from 'js-cookie';
 import CodeMirror from '@uiw/react-codemirror';
+import { getUiSettings } from '../../utils/settings';
+import SettingsPanel from '../SettingsPanel/SettingsPanel';
 import { abyss } from '@uiw/codemirror-theme-abyss';
 import { autocompletion } from '@codemirror/autocomplete';
 import "./CreatePage.css";
@@ -16,7 +18,8 @@ import {
     FaExclamationTriangle,
     // Fa icon for success
     FaCheckCircle,
-    FaTimes
+    FaTimes,
+    FaCog // Settings Icon
 } from 'react-icons/fa'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -207,11 +210,45 @@ export default function EditorPage() {
     const [tags, setTags] = useState(null);
     const [code, setCode] = useState(`// Paste your code in here, or type code here! [JS is selected]
 
-const hello = "Hello, javascript!"
+const hello = "Hello, Javascript!"
 
 console.log(hello);
 `);
     const [languageExtension, setLanguageExtension] = useState(null);
+    const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
+    const [uiSettings, setUiSettings] = useState(getUiSettings());
+
+    useEffect(() => {
+        // Initial load of settings
+        setUiSettings(getUiSettings());
+    }, []);
+
+    useEffect(() => {
+        // Apply settings when uiSettings change
+        const root = document.documentElement;
+        const body = document.body;
+
+        if (uiSettings) {
+            root.style.setProperty('--app-font-family', uiSettings.fontFamily);
+            root.style.setProperty('--app-theme-color', uiSettings.themeColor);
+            body.style.fontFamily = uiSettings.fontFamily;
+
+            if (uiSettings.backgroundImage) {
+                root.style.setProperty('--app-background-image', `url(${uiSettings.backgroundImage})`);
+                body.style.backgroundImage = `url(${uiSettings.backgroundImage})`;
+                body.style.backgroundSize = 'cover';
+                body.style.backgroundPosition = 'center';
+                body.style.backgroundAttachment = 'fixed';
+            } else {
+                root.style.setProperty('--app-background-image', 'none');
+                body.style.backgroundImage = ''; // Revert to CSS default
+                body.style.backgroundSize = '';
+                body.style.backgroundPosition = '';
+                body.style.backgroundAttachment = '';
+            }
+        }
+    }, [uiSettings]);
+
 
     useEffect(() => {
         if (cookie) {
@@ -255,9 +292,18 @@ console.log(hello);
     const [loadingState, setLoadingState] = useState("idle");
     const [loadingInfo, setLoadingInfo] = useState("");
 
+    const handleCloseSettingsPanel = () => {
+        setIsSettingsPanelOpen(false);
+        setUiSettings(getUiSettings()); // Refresh settings on close
+    };
+
     return (
         <div className="editor-page">
             {loadingState!="idle" && <LoadingOverlay state={loadingState} message={loadingInfo} onClose={() => setLoadingState("idle")} />}
+            <SettingsPanel 
+                isOpen={isSettingsPanelOpen} 
+                onClose={handleCloseSettingsPanel} 
+            />
             <Suspense fallback={<div>Loading editor...</div>}>
                 <CodeMirror
                     value={code}
@@ -304,6 +350,13 @@ console.log(hello);
                         }}
                     >Google Login</button>
                 )}
+                <button 
+                    className="btn settings-btn" 
+                    onClick={() => setIsSettingsPanelOpen(true)}
+                    title="Open UI Settings"
+                >
+                    <FaCog />
+                </button>
             </div>
 
             <PasteSettings onLanguageChange={setLanguage} onExpirationChange={setExpiration} onPasswordChange={setPassword} onTitleChange={setTitle} onTagsChange={setTags} />
