@@ -127,14 +127,18 @@
     opacity: 0;
     animation: fadeIn 1s forwards;
     margin-bottom: 20px; /* Space below paste settings */
+}
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
+    .paste-settings-container {
         gap: 15px;
         padding: 15px;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
+}
 
-    @media (max-width: 480px) {
+@media (max-width: 480px) {
+    .paste-settings-container {
         gap: 10px;
         padding: 10px;
         grid-template-columns: 1fr;
@@ -193,8 +197,11 @@
     animation: slideUp 0.6s forwards ease-out;
     animation-delay: 0.6s;
     font-size: 14px; /* Ensure consistent base font size */
+}
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
+    .paste-setting input,
+    .paste-setting select {
         padding: 8px;
         font-size: 13px; /* Slightly smaller font for inputs on tablets */
     }
